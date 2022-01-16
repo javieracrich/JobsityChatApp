@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChatApp.Web", "JobsityChatApp\JobsityChatApp.Web.csproj", "{882206AA-7721-4424-A0B2-FD954FC12771}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChatApp.Data", "JobsityChatApp.Data\JobsityChatApp.Data.csproj", "{B4AD11E6-38CF-4A20-94B0-33A83DCFC760}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChatApp.Services", "JobsityChatApp.Services\JobsityChatApp.Services.csproj", "{59038B08-3F1B-4B12-A304-E0D157961B33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsityChatApp.Core", "JobsityChatApp.Core\JobsityChatApp.Core.csproj", "{1F1E6030-FE1F-42DA-8175-31AD32110765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChatApp.Tests", "JobsityChatApp.Tests\JobsityChatApp.Tests.csproj", "{34CEB569-A37F-4CD3-AF03-CC83AF2B3B2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{B59A6C1B-4A1D-44EF-B557-7309DA86B4D4}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{882206AA-7721-4424-A0B2-FD954FC12771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882206AA-7721-4424-A0B2-FD954FC12771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882206AA-7721-4424-A0B2-FD954FC12771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882206AA-7721-4424-A0B2-FD954FC12771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4AD11E6-38CF-4A20-94B0-33A83DCFC760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4AD11E6-38CF-4A20-94B0-33A83DCFC760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4AD11E6-38CF-4A20-94B0-33A83DCFC760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4AD11E6-38CF-4A20-94B0-33A83DCFC760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59038B08-3F1B-4B12-A304-E0D157961B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59038B08-3F1B-4B12-A304-E0D157961B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59038B08-3F1B-4B12-A304-E0D157961B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59038B08-3F1B-4B12-A304-E0D157961B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1E6030-FE1F-42DA-8175-31AD32110765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1E6030-FE1F-42DA-8175-31AD32110765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1E6030-FE1F-42DA-8175-31AD32110765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1E6030-FE1F-42DA-8175-31AD32110765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34CEB569-A37F-4CD3-AF03-CC83AF2B3B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34CEB569-A37F-4CD3-AF03-CC83AF2B3B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34CEB569-A37F-4CD3-AF03-CC83AF2B3B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34CEB569-A37F-4CD3-AF03-CC83AF2B3B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87EC9221-3CF0-4B12-A5EB-81477C5DBB2E}
+	EndGlobalSection
+EndGlobal

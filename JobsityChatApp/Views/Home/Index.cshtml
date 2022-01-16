@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Jobsity Chat app";
+}
+
+@model List<Message>
+@{
+    var userName = User.Identity.Name;
+}
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Jobsity Chat App</h1>
+    </div>
+</div>
+
+<div class="col-md-12">
+
+    <div class="form-group">
+        <input name="Text" class=form-control id="messageText" value="/stock=aapl" />
+    </div>
+    <div class="form-group">
+        <input type="button" value="Send Message" id="submitButton" class="btn btn-primary mt-2 mb-2" />
+    </div>
+    <input type="hidden" value="@userName" name="username" />
+
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="chat">
+        @if (Model != null)
+        {
+            @foreach (var msg in Model)
+            {
+                string containerClass, textAlign, contcolor, offset;
+
+                if (userName == msg.UserName)
+                {
+                    containerClass = "container darker";
+                    textAlign = "text-right text-white";
+                    contcolor = "";
+                    offset = "col-md-6 offset-md-6";
+                }
+                else
+                {
+                    containerClass = "container ";
+                    textAlign = "text-left";
+                    contcolor = "bg-light";
+                    offset = "col-md-6";
+                }
+
+                <div class="row">
+                    <div class="@offset">
+                        <div class="@containerClass @contcolor">
+                            <p class="sender @textAlign">
+                                @msg.UserName -
+                                @msg.Created.ToString("dd/MM/yyyy hh:mm:ss")
+                            </p>
+                            <p class="@textAlign">@msg.Text</p>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <script>
+        const userName = "@ViewBag.CurrentUserName";
+    </script>
+}
+
+
+
+
+@section scripts{
+
+<script src="~/js/chat.js"></script>
+}
