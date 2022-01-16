@@ -33,7 +33,7 @@ public class ChatHubTests
         //assert
         botService.Verify(x => x.RequestQuote(It.IsAny<string>()), Times.Never);
         messageService.Verify(x => x.SendMessageAsync(It.IsAny<Message>()), Times.Never);
-        messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>()), Times.Never);
+        messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>(), null), Times.Never);
     }
 
     [Fact]
@@ -58,7 +58,7 @@ public class ChatHubTests
         //assert
         botService.Verify(x => x.RequestQuote(It.IsAny<string>()), Times.Once);
         messageService.Verify(x => x.SendMessageAsync(It.IsAny<Message>()), Times.Never);
-        messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>()), Times.Never);
+        messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>(), null), Times.Never);
     }
 
     [Fact]
@@ -83,6 +83,6 @@ public class ChatHubTests
         //assert
         botService.Verify(x => x.RequestQuote(It.IsAny<string>()), Times.Never);
         messageService.Verify(x => x.SendMessageAsync(It.IsAny<Message>()), Times.Once);
-        messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>()), Times.Once);
+        messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>(), null), Times.Once);
     }
 }
