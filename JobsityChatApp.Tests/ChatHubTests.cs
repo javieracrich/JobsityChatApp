@@ -31,7 +31,7 @@ public class ChatHubTests
         await sut.SendMessage(msg);
 
         //assert
-        botService.Verify(x => x.RequestQuote(It.IsAny<string>()), Times.Never);
+        botService.Verify(x => x.RequestQuote(It.IsAny<string>(), 1), Times.Never);
         messageService.Verify(x => x.SendMessageAsync(It.IsAny<Message>()), Times.Never);
         messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>(), null), Times.Never);
     }
@@ -49,14 +49,15 @@ public class ChatHubTests
             Created = DateTime.UtcNow,
             Text = "/stock=aapl.us",
             UserId = Guid.NewGuid(),
-            UserName = Guid.NewGuid().ToString()
+            UserName = Guid.NewGuid().ToString(),
+            RoomId = 1
         };
 
         //act
         await sut.SendMessage(msg);
 
         //assert
-        botService.Verify(x => x.RequestQuote(It.IsAny<string>()), Times.Once);
+        botService.Verify(x => x.RequestQuote(It.IsAny<string>(), 1), Times.Once);
         messageService.Verify(x => x.SendMessageAsync(It.IsAny<Message>()), Times.Never);
         messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>(), null), Times.Never);
     }
@@ -81,7 +82,7 @@ public class ChatHubTests
         await sut.SendMessage(msg);
 
         //assert
-        botService.Verify(x => x.RequestQuote(It.IsAny<string>()), Times.Never);
+        botService.Verify(x => x.RequestQuote(It.IsAny<string>(), 1), Times.Never);
         messageService.Verify(x => x.SendMessageAsync(It.IsAny<Message>()), Times.Once);
         messageService.Verify(x => x.CreateMessageAsync(It.IsAny<Message>(), null), Times.Once);
     }

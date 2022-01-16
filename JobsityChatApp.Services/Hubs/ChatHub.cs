@@ -17,6 +17,13 @@ public class ChatHub : Hub
         this.messageService = messageService;
     }
 
+    public async Task AddToGroup(string roomName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+
+        await Clients.Group(roomName).SendAsync("userJoined", $"{Context.User.Identity!.Name} has joined room {roomName}.");
+    }
+
     public async Task SendMessage(Message message)
     {
         if (string.IsNullOrWhiteSpace(message.Text))
@@ -28,7 +35,7 @@ public class ChatHub : Hub
         {
             var stockCode = message.Text.Substring(message.Text.IndexOf("=") + 1);
 
-            await this.botService.RequestQuote(stockCode);
+            await this.botService.RequestQuote(stockCode, message.RoomId);
         }
         else
         {

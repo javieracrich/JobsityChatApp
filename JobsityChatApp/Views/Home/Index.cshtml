@@ -14,6 +14,14 @@
 </div>
 
 <div class="col-md-12">
+    <div class="form-group mb-2">
+        <label for="rooms">Room</label>
+        <select id="rooms" name="rooms" onchange="onRoomChanged()" >
+            <option selected value="1">room 1</option>
+            <option value="2">room 2</option>
+            <option value="3">room 3</option>
+        </select>
+    </div>
 
     <div class="form-group">
         <input name="Text" class=form-control id="messageText" value="" />
@@ -27,41 +35,7 @@
 
 <div class="row">
     <div class="col-md-12" id="chat">
-        @if (Model != null)
-        {
-            @foreach (var msg in Model)
-            {
-                string containerClass, textAlign, contcolor, offset;
 
-                if (userName == msg.UserName)
-                {
-                    containerClass = "container darker";
-                    textAlign = "text-right text-white";
-                    contcolor = "";
-                    offset = "col-md-6 offset-md-6";
-                }
-                else
-                {
-                    containerClass = "container ";
-                    textAlign = "text-left";
-                    contcolor = "bg-light";
-                    offset = "col-md-6";
-                }
-
-                <div class="row">
-                    <div class="@offset">
-                        <div class="@containerClass @contcolor">
-                            <p class="sender @textAlign">
-                                @msg.UserName -
-                                @msg.Created.ToString("o")
-                            </p>
-                            <p class="@textAlign">@msg.Text</p>
-
-                        </div>
-                    </div>
-                </div>
-            }
-        }
     </div>
 </div>
 
@@ -69,6 +43,7 @@
 {
     <script>
         const userName = "@ViewBag.CurrentUserName";
+        var room = document.getElementById("rooms").value;
     </script>
 }
 

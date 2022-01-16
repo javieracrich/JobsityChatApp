@@ -1,10 +1,8 @@
 ﻿using JobsityChatApp.Data;
 using JobsityChatApp.Models;
-using JobsityChatApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace JobsityChatApp.Controllers;
@@ -12,12 +10,10 @@ namespace JobsityChatApp.Controllers;
 [Authorize]
 public class HomeController : Controller
 {
-    private readonly IMessageService messageService;
     private readonly UserManager<ChatUser> userManager;
 
-    public HomeController(IMessageService messageService, UserManager<ChatUser> userManager)
+    public HomeController(UserManager<ChatUser> userManager)
     {
-        this.messageService = messageService;
         this.userManager = userManager;
     }
 
@@ -25,12 +21,7 @@ public class HomeController : Controller
     {
         var currentUser = await this.userManager.GetUserAsync(User);
         ViewBag.CurrentUserName = currentUser.UserName;
-        var messages = await this.messageService.GetMessages()
-                                .OrderByDescending(x => x.Created)
-                                .Take(50)
-                                .ToListAsync();
-
-        return View(messages);
+        return View();
     }
 
 

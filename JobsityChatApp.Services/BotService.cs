@@ -6,7 +6,7 @@ namespace JobsityChatApp.Services;
 
 public interface IBotService
 {
-    public Task RequestQuote(string stockCode);
+    public Task RequestQuote(string stockCode, int roomId);
 }
 
 public class BotService : IBotService
@@ -18,10 +18,10 @@ public class BotService : IBotService
         this.botOptions = botOptions.Value;
     }
 
-    public async Task RequestQuote(string stockCode)
+    public async Task RequestQuote(string stockCode, int roomId)
     {
         var client = new RestClient(this.botOptions.Url!);
-        var request = new RestRequest($"stock?code={stockCode}", Method.Get);
+        var request = new RestRequest($"stock?code={stockCode}&roomId={roomId}", Method.Get);
         await client.ExecuteAsync(request);
     }
 }

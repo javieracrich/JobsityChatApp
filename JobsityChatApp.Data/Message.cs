@@ -8,4 +8,5 @@ public class Message
     public Guid UserId { get; set; }
     public string UserName { get; set; }
     public virtual ChatUser? User { get; set; }
+    public int RoomId { get; set; }
 }

@@ -6,6 +6,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace JobsityChatApp;
 
@@ -48,11 +49,15 @@ public class RabbitListener : IRabbitListener
         var consumer = new EventingBasicConsumer(channel);
         consumer.Received += async (model, ea) =>
         {
+            var queueMessage = JsonSerializer.Deserialize<QueueMessage>(Encoding.UTF8.GetString(ea.Body.ToArray()));
+
             var message = new Message()
             {
                 Created = DateTime.UtcNow,
-                Text = Encoding.UTF8.GetString(ea.Body.ToArray()),
+                Text = queueMessage!.Text,
+                RoomId = queueMessage!.RoomId,
             };
+
             var principal = GetBotIdentity();
 
             using var scope = serviceProvider.CreateScope();
@@ -64,7 +69,7 @@ public class RabbitListener : IRabbitListener
                              autoAck: true,
                              consumer: consumer);
     }
-  
+
     public void Deregister()
     {
         this.connection.Close();

@@ -52,7 +52,7 @@ public class MessageService : IMessageService
     public Task SendMessageAsync(Message message)
     {
         var dto = this.mapper.Map<MessageDto>(message);
-        return this.hubContext.Clients.All.SendAsync(Constants.ReceiveMessage, dto);
+        return this.hubContext.Clients.Group(dto.RoomId.ToString()).SendAsync(Constants.ReceiveMessage, dto);
     }
 
     public IQueryable<Message> GetMessages()
