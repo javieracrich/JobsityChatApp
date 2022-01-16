@@ -1,10 +1,11 @@
-﻿using RabbitMQ.Client.Events;
-using RabbitMQ.Client;
-using System.Text;
+﻿using JobsityChatApp.Core;
+using JobsityChatApp.Data;
+using JobsityChatApp.Services;
 using Microsoft.Extensions.Options;
-using JobsityChatApp.Hubs;
-using Microsoft.AspNetCore.SignalR;
-using JobsityChatApp.Core;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Security.Claims;
+using System.Text;
 
 namespace JobsityChatApp;
 
@@ -18,10 +19,10 @@ public class RabbitListener : IRabbitListener
 {
     private readonly IConnection connection;
     private readonly IModel channel;
-    private readonly IHubContext<ChatHub> hubContext;
+    private readonly IServiceProvider serviceProvider;
     private readonly QueueOptions options;
 
-    public RabbitListener(IOptions<QueueOptions> options, IHubContext<ChatHub> hubContext)
+    public RabbitListener(IOptions<QueueOptions> options, IServiceProvider serviceProvider)
     {
         this.options = options.Value;
         var factory = new ConnectionFactory()
@@ -33,7 +34,7 @@ public class RabbitListener : IRabbitListener
 
         connection = factory.CreateConnection();
         channel = connection.CreateModel();
-        this.hubContext = hubContext;
+        this.serviceProvider = serviceProvider;
     }
 
     public void Register()
@@ -47,22 +48,37 @@ public class RabbitListener : IRabbitListener
         var consumer = new EventingBasicConsumer(channel);
         consumer.Received += async (model, ea) =>
         {
-            var msg = new MessageDto()
+            var message = new Message()
             {
                 Created = DateTime.UtcNow,
                 Text = Encoding.UTF8.GetString(ea.Body.ToArray()),
-                UserName = "jobsity bot",
             };
-            await this.hubContext.Clients.All.SendAsync(Constants.ReceiveMessage, msg);
+            var principal = GetBotIdentity();
+
+            using var scope = serviceProvider.CreateScope();
+            var messageService = scope.ServiceProvider.GetRequiredService<IMessageService>();
+            await messageService.CreateMessageAsync(message, principal);
+            await messageService.SendMessageAsync(message);
         };
         channel.BasicConsume(queue: this.options.QueueName,
                              autoAck: true,
                              consumer: consumer);
     }
-
+  
     public void Deregister()
     {
         this.connection.Close();
     }
-}
 
+    private static ClaimsPrincipal GetBotIdentity()
+    {
+        var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, Constants.BotUserName),
+                new Claim(ClaimTypes.NameIdentifier,Constants.BotUserId.ToString())
+            };
+
+        var identity = new ClaimsIdentity(claims, "Bearer");
+        return new ClaimsPrincipal(identity);
+    }
+}

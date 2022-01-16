@@ -5,9 +5,9 @@ namespace JobsityChatApp;
 
 public static class DatabaseMigrator
 {
-    public static async Task MigrateDatabase(IApplicationBuilder app)
+    public static async Task MigrateDatabase(IServiceProvider serviceProvider)
     {
-        var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+        var serviceScopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
 
         using var serviceScope = serviceScopeFactory.CreateScope();
 

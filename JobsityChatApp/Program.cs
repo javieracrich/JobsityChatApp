@@ -32,6 +32,7 @@ app.MapControllerRoute(
 app.MapRazorPages();
 app.MapHub<ChatHub>("/Home/Index");
 
-await DatabaseMigrator.MigrateDatabase(app);
+await DatabaseMigrator.MigrateDatabase(app.Services);
+await DatabaseSeeder.SeedDatabase(app.Services);
 
 app.Run();

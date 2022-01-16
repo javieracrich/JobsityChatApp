@@ -32,9 +32,9 @@ public class ChatHub : Hub
         }
         else
         {
-            await this.messageService.CreateMessage(message);
+            await this.messageService.CreateMessageAsync(message);
 
-            await this.messageService.SendMessage(message);
+            await this.messageService.SendMessageAsync(message);
         }
     }
 }

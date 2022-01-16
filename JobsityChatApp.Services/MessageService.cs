@@ -3,53 +3,53 @@ using JobsityChatApp.Core;
 using JobsityChatApp.Data;
 using JobsityChatApp.Hubs;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 using System.Web;
 
 namespace JobsityChatApp.Services;
 
 public interface IMessageService
 {
-    Task CreateMessage(Message message);
-    Task SendMessage(Message message);
+    Task CreateMessageAsync(Message message, ClaimsPrincipal? principal = null);
+    Task SendMessageAsync(Message message);
     IQueryable<Message> GetMessages();
 }
-
 public class MessageService : IMessageService
 {
     private readonly ChatContext chatContext;
-    private readonly UserManager<ChatUser> userManager;
     private readonly IHubContext<ChatHub> hubContext;
     private readonly IMapper mapper;
     private readonly IHttpContextAccessor httpContextAccessor;
 
     public MessageService(ChatContext context,
-        UserManager<ChatUser> userManager,
         IHubContext<ChatHub> hubContext,
         IMapper mapper,
         IHttpContextAccessor httpContextAccessor)
     {
         this.chatContext = context;
-        this.userManager = userManager;
         this.hubContext = hubContext;
         this.mapper = mapper;
         this.httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task CreateMessage(Message message)
+    public async Task CreateMessageAsync(Message message, ClaimsPrincipal? principal = null)
     {
-        var user = this.httpContextAccessor.HttpContext.User;
+        ClaimsPrincipal user = principal == null ?
+            this.httpContextAccessor.HttpContext.User :
+            principal;
+
         message.UserName = user.Identity!.Name!;
-        var sender = await this.userManager.GetUserAsync(user);
-        message.UserId = sender.Id;
+        var userId = user.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+        message.UserId = Guid.Parse(userId);
+
         message.Created = DateTime.UtcNow;
         message.Text = HttpUtility.HtmlEncode(message.Text);
         await chatContext.Messages!.AddAsync(message);
         await chatContext.SaveChangesAsync();
     }
 
-    public Task SendMessage(Message message)
+    public Task SendMessageAsync(Message message)
     {
         var dto = this.mapper.Map<MessageDto>(message);
         return this.hubContext.Clients.All.SendAsync(Constants.ReceiveMessage, dto);
