@@ -23,14 +23,12 @@ var text = document.getElementById('messageText');
 const messagesQueue = [];
 
 document.getElementById('submitButton').addEventListener('click', () => {
-    debugger;
     var msg = new Message(userName, text.value);
     connection.invoke('sendMessage', msg);
     text.value = "";
 });
 
 function onReceiveMessage(message) {
-    debugger;
     let isCurrentUserMessage = message.userName === userName;
 
     let row = document.createElement('div');
@@ -44,7 +42,7 @@ function onReceiveMessage(message) {
 
     let header = document.createElement('p');
     header.className = "sender";
-    header.innerHTML = `${message.userName} - ${message.created}`;
+    header.innerHTML = `${message.userName} - ${new Date(message.created).toISOString()}`;
 
     let text = document.createElement('p');
     text.innerHTML = message.text;
