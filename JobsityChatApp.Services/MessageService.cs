@@ -15,6 +15,7 @@ public interface IMessageService
     Task SendMessageAsync(Message message);
     IQueryable<Message> GetMessages();
 }
+
 public class MessageService : IMessageService
 {
     private readonly ChatContext chatContext;

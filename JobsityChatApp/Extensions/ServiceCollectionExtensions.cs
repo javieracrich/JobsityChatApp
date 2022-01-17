@@ -2,6 +2,7 @@
 using JobsityChatApp.Core;
 using JobsityChatApp.Data;
 using JobsityChatApp.Services;
+using JobsityChatApp.Web;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;

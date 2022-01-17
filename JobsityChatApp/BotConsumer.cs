@@ -4,7 +4,7 @@ using JobsityChatApp.Services;
 using MassTransit;
 using System.Security.Claims;
 
-namespace JobsityChatApp.Extensions
+namespace JobsityChatApp.Web
 {
     internal class BotConsumer : IConsumer<BotMessage>
     {
@@ -26,8 +26,8 @@ namespace JobsityChatApp.Extensions
 
             var principal = GetBotIdentity();
 
-            await this.messageService.CreateMessageAsync(message, principal);
-            await this.messageService.SendMessageAsync(message);
+            await messageService.CreateMessageAsync(message, principal);
+            await messageService.SendMessageAsync(message);
         }
 
         private static ClaimsPrincipal GetBotIdentity()
