@@ -10,7 +10,7 @@
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
-    <PackageReference Include="RestSharp" Version="107.0.3" />
+    <PackageReference Include="Refit" Version="6.1.15" />
   </ItemGroup>
 
   <ItemGroup>

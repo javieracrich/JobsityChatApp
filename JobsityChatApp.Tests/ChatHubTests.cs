@@ -14,7 +14,7 @@ public class ChatHubTests
     public async Task SendMessage_NullText()
     {
         //arrange
-        var botService = new Mock<IBotService>();
+        var botService = new Mock<IBotApi>();
         var messageService = new Mock<IMessageService>();
 
         var sut = new ChatHub(botService.Object, messageService.Object);
@@ -40,7 +40,7 @@ public class ChatHubTests
     public async Task SendMessage_NotNullStockText()
     {
         //arrange
-        var botService = new Mock<IBotService>();
+        var botService = new Mock<IBotApi>();
         var messageService = new Mock<IMessageService>();
 
         var sut = new ChatHub(botService.Object, messageService.Object);
@@ -66,7 +66,7 @@ public class ChatHubTests
     public async Task SendMessage_NotNullText()
     {
         //arrange
-        var botService = new Mock<IBotService>();
+        var botService = new Mock<IBotApi>();
         var messageService = new Mock<IMessageService>();
 
         var sut = new ChatHub(botService.Object, messageService.Object);

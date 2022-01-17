@@ -8,12 +8,12 @@ namespace JobsityChatApp.Hubs;
 [Authorize]
 public class ChatHub : Hub
 {
-    private readonly IBotService botService;
+    private readonly IBotApi botApi;
     private readonly IMessageService messageService;
 
-    public ChatHub(IBotService botService, IMessageService messageService)
+    public ChatHub(IBotApi botApi, IMessageService messageService)
     {
-        this.botService = botService;
+        this.botApi = botApi;
         this.messageService = messageService;
     }
 
@@ -35,7 +35,7 @@ public class ChatHub : Hub
         {
             var stockCode = message.Text.Substring(message.Text.IndexOf("=") + 1);
 
-            await this.botService.RequestQuote(stockCode, message.RoomId);
+            await this.botApi.RequestQuote(stockCode, message.RoomId);
         }
         else
         {
@@ -45,4 +45,3 @@ public class ChatHub : Hub
         }
     }
 }
-
