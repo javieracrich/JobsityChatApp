@@ -46,7 +46,8 @@ public static class ServiceCollectionExtensions
             {
                 config.AutoDelete = false;
                 config.Exclusive = false;
-                config.Durable = false;
+                config.Durable = true;
+                config.AutoStart = true;
                 config.Host(options.Url);
                 config.ReceiveEndpoint(options.QueueName, c =>
                 {
