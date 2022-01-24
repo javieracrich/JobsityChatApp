@@ -6,7 +6,6 @@ using JobsityChatApp.Web;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Refit;
 
 namespace JobsityChatApp.Extensions;
 
@@ -32,7 +31,6 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper(new Type[] { typeof(Mappings) });
         services.Configure<BotOptions>(config.GetSection("Bot"));
         services.Configure<QueueOptions>(config.GetSection(Queue));
-        services.AddScoped((x) => RestService.For<IBotApi>(options.Url!));
         services.AddMassTransitMiddleware(config);
     }
 

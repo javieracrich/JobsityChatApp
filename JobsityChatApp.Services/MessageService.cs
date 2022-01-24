@@ -36,7 +36,7 @@ public class MessageService : IMessageService
 
     public async Task CreateMessageAsync(Message message, ClaimsPrincipal? principal = null)
     {
-        ClaimsPrincipal user = principal == null ?
+        var user = principal == null ?
             this.httpContextAccessor.HttpContext.User :
             principal;
 

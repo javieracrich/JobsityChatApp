@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace JobsityChatApp.Web
 {
-    internal class BotConsumer : IConsumer<BotMessage>
+    public class BotConsumer : IConsumer<BotMessage>
     {
         private readonly IMessageService messageService;
 
@@ -17,15 +17,8 @@ namespace JobsityChatApp.Web
 
         public async Task Consume(ConsumeContext<BotMessage> context)
         {
-            var message = new Message()
-            {
-                Created = DateTime.UtcNow,
-                Text = context.Message!.Text,
-                RoomId = context.Message!.RoomId,
-            };
-
+            var message = new Message(context.Message!.Text, context.Message.RoomId);
             var principal = GetBotIdentity();
-
             await messageService.CreateMessageAsync(message, principal);
             await messageService.SendMessageAsync(message);
         }
